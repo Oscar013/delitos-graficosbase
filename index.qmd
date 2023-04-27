@@ -39,8 +39,10 @@ knitr::kable(
 #| code-fold: true
 # Crear tabla de frecuencias
 tabla_delitos <- table(delitos_2022$Provincia)
+
 # Ordenar descendentemente la tabla de frecuencia
 tabla_delitos_ordenada <- sort(tabla_delitos, decreasing = TRUE)
+
 # Gráfico de barras verticales
 barplot(
 	height = tabla_delitos_ordenada,
@@ -165,6 +167,69 @@ legend(
   fill = rainbow(4),
   horiz = FALSE
 )
+```
+
+### homicidios 
+```{r}
+#| label: cantidad-homicidios-por-provincia
+#| code-fold: true
+# filtro de delitos por subdelito = homicidio 
+
+homicidios_2022 <- delitos_2022[delitos_2022$SubDelito == "HOMICIDIO", ]
+
+
+
+tabla_delitos <- table(homicidios_2022$Edad, homicidios_2022$provincia)
+
+barplot(height = tabla_delitos,
+        main = "Distribución de delitos cometidos con respecto a la edad de la victima",
+        xlab = "cantidad de delitos",
+        ylab = "edad de las victimas",
+        col = rainbow(4))
+
+# ordenar tabla de frecuencias 
+
+# Leyenda
+legend(
+  x = "topleft",
+  inset = 0.03,
+  legend = c("Adulto Mayor", "Desconocido", "Mayor de edad", "Menor de edad"),
+  fill = rainbow(4),
+  horiz = FALSE
+)
+```
+
+### cantidad de homicidios por canton y edad de la victima en los 20 cantones 
+### con mas homicidios 
+
+```{r}
+#| label: cantidad-homicidios-por-edad-en-20-cantones
+#| code-fold: true
+
+#filtro por homicidios 
+homicidios_2022 <- delitos_2022[delitos_2022$SubDelito == "HOMICIDIO", ]
+
+#crear tabla de frecuencias 
+tabla_homicidios <- table(homicidios_2022$Canton)
+
+#orden 
+tabla_delitos <- sort(tabla_homicidios, decreasing = TRUE)
+
+#cantones con mas delitos 
+tabla_homidios_ordenada <- head(tabla_delitos_ordenada, 30)
+
+#grafico de barras 
+barplot(
+	height = tabla_homidios_ordenada,
+	main = "Cantidad de delitos cometidos en 2022 por provincia", 
+	sub = "Fuente: OIJ",
+	col = "brown",
+	las = 2,
+	cex.names = 0.5,
+	cex.axis = 0.7,
+	horiz = FALSE
+)
+
 ```
 
 
